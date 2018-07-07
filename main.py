@@ -234,8 +234,8 @@ def init(status):
     @do_once("卖身份证")
     @random_success("卖身份证",0.85,"那个找你做法人的人就是个骗子，拿了你的身份证转身就跑掉了,你的钱也没有拿回来")
     def sale_IDcard():
-        status["Message"] = "你把自己的身份证卖掉换了1000块钱\n"
-        status["Money"]+=1000
+        status["Message"] = "你把自己的身份证卖掉换了100块钱\n"
+        status["Money"]+=100
     add_operation("卖身份证",sale_IDcard)
 
     #===================还债务   ========================
@@ -265,12 +265,12 @@ def init(status):
                 status["ContinueWorkTime"] = 0
                 return
 
-            status["Message"] = "你勤奋地工作了一天，获得了30块钱。\n"
+            status["Message"] = "你勤奋地工作了一天，获得了130块钱。\n"
             if status["ContinueWorkTime"] > 0 :
-                status["Message"] += "主管对你的印象有所改善，他给你稍微加了%d块工资，以示鼓励"%status["ContinueWorkTime"]
+                status["Message"] += "主管对你的印象有所改善，他给你稍微加了%d块工资，以示鼓励\n"%(status["ContinueWorkTime"]*5)
             status["Message"] += "你的主管觉得你不错，告诉你如果经常来，会考虑给你加点工资"
 
-            status["Money"]+=30 + status["ContinueWorkTime"]
+            status["Money"]+=130 + status["ContinueWorkTime"]*5
             status["HP"] -= 30
             status["ContinueWorkTime"] += 1
         add_operation("好好干活",work_hard)
@@ -286,13 +286,13 @@ def init(status):
                 return
             status["Message"] = "你摸了一天鱼\n"
             if random.random() < 0.5:
-                status["Message"] += "主管并没有发现你在摸鱼，还是给你发了30块钱的工资"
-                status["Money"]+=30
+                status["Message"] += "主管并没有发现你在摸鱼，还是给你发了130块钱的工资"
+                status["Money"]+=130
                 status["HP"] -= 15
                 status["ContinueWorkTime"] += 1
             else:
-                status["Message"] += "主管发现你在摸鱼，但是对你无可奈何。他清楚地知道这里是三和，所以给了你10块钱让你早点滚蛋别来了"
-                status["Money"]+=10
+                status["Message"] += "主管发现你在摸鱼，但是对你无可奈何。他清楚地知道这里是三和，所以给了你70块钱让你早点滚蛋别来了"
+                status["Money"]+=70
                 status["HP"] -= 15
                 status["ContinueWorkTime"] = 0
         add_operation("摸鱼",relax)
@@ -335,6 +335,7 @@ def init(status):
             status["HP"] -= 3
         add_operation("开一局赔率10倍的网赌",gambling10) 
 
+        @do_once("点一碗红烧牛肉面")
         def buy_noodle():
             status["Message"] = "你买了一碗3块钱的红烧牛肉面,恢复了一些体力\n"
             status["HP"] += 3
